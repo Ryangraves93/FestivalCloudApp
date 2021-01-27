@@ -1,5 +1,5 @@
 <?php
-require_once '../../classes/performer.php';
+require_once '../../classes/Performer.php';
 
 try {
     $performers = Performer::all();

@@ -9,11 +9,11 @@
         <?php
         require_once 'functions.php';
         
-        echo '<a class="nav-link" href="/festivalCloud/">Home</a>';
-        echo '<a class="nav-link" href="/festivalCloud/views/festivals/index.php">Festivals</a>';
-        echo '<a class="nav-link" href="/festivalCloud/views/stages/index.php">Stages</a>';
-        echo '<a class="nav-link" href="/festivalCloud/views/shows/index.php">Shows</a>';
-        echo '<a class="nav-link" href="/festivalCloud/views/performers/index.php">Performers</a>';
+        echo '<a class="nav-link" href="/">Home</a>';
+        echo '<a class="nav-link" href="/views/festivals/index.php">Festivals</a>';
+        echo '<a class="nav-link" href="/views/stages/index.php">Stages</a>';
+        echo '<a class="nav-link" href="/views/shows/index.php">Shows</a>';
+        echo '<a class="nav-link" href="/views/performers/index.php">Performers</a>';
         ?>
       </div>
     </div>
