@@ -1,3 +1,16 @@
+
+<script>
+	var url_str = window.location.href;
+	//On successful authentication, AWS Cognito will redirect to Call-back URL and pass the access_token as a request parameter. 
+	//If you notice the URL, a “#” symbol is used to separate the query parameters instead of the “?” symbol. 
+	//So we need to replace the “#” with “?” in the URL and call the page again.
+	
+	if(url_str.includes("#")){
+		var url_str_hash_replaced = url_str.replace("#", "?");
+		window.location.href = url_str_hash_replaced;
+	}
+	
+</script>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container">
     <a class="navbar-brand" href="#">FestivalCloud</a>
@@ -8,12 +21,22 @@
       <div class="navbar-nav">
         <?php
         require_once 'functions.php';
+        require_once __DIR__ . '/../classes/Auth.php'; //:)
+        $auth = new Auth();
+        $query = "";
         
-        echo '<a class="nav-link" href="/">Home</a>';
-        echo '<a class="nav-link" href="/views/festivals/index.php">Festivals</a>';
-        echo '<a class="nav-link" href="/views/stages/index.php">Stages</a>';
-        echo '<a class="nav-link" href="/views/shows/index.php">Shows</a>';
-        echo '<a class="nav-link" href="/views/performers/index.php">Performers</a>';
+        if($auth->loggedIn()) {
+          $query = '?access_token='.$auth->getAccessToken();
+          echo 'logged in';
+          echo '<a class="nav-link" href="'.BASE_URL.'">Sign Out</a>';
+        } else echo '<a class="nav-link" href="'. $auth->getSignInURL() . '">Sign In</a>';
+
+        
+   echo '<a class="nav-link" href="'.BASE_URL.'/views/festivals/index.php">Festivals</a>';
+            echo '<a class="nav-link" href="'.BASE_URL.'/views/stages/index.php">Stages</a>';
+            echo '<a class="nav-link" href="'.BASE_URL.'/views/shows/index.php">Shows</a>';
+            echo '<a class="nav-link" href="'.BASE_URL.'/views/performers/index.php">Performers</a>';
+        
         ?>
       </div>
     </div>

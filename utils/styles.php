@@ -1,3 +1,6 @@
-<link rel="stylesheet" href="/styles/bootstrap.min.css">
-<!-- <link rel="stylesheet" href="styles/bootstrap-theme.min.css"> -->
-<link rel="stylesheet" href="/styles/main.css">
+
+<?php define('BASE_URL', 'http://localhost/festivalCloud');
+echo '<link rel="stylesheet" href="'.BASE_URL.'/styles/bootstrap.min.css">';
+echo '<link rel="stylesheet" href="'.BASE_URL.'/styles/main.css">';
+?>
+
