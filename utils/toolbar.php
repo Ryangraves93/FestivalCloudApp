@@ -26,16 +26,15 @@
         $query = "";
         
         if($auth->loggedIn()) {
-          $query = '?access_token='.$auth->getAccessToken();
+          $query = 'access_token='.$auth->getAccessToken();
           echo 'logged in';
           echo '<a class="nav-link" href="'.BASE_URL.'">Sign Out</a>';
         } else echo '<a class="nav-link" href="'. $auth->getSignInURL() . '">Sign In</a>';
-
         
-   echo '<a class="nav-link" href="'.BASE_URL.'/views/festivals/index.php">Festivals</a>';
-            echo '<a class="nav-link" href="'.BASE_URL.'/views/stages/index.php">Stages</a>';
-            echo '<a class="nav-link" href="'.BASE_URL.'/views/shows/index.php">Shows</a>';
-            echo '<a class="nav-link" href="'.BASE_URL.'/views/performers/index.php">Performers</a>';
+          echo '<a class="nav-link" href="'.BASE_URL.'/views/festivals/index.php?' .$query .'">Festivals</a>';
+          echo '<a class="nav-link" href="'.BASE_URL.'/views/stages/index.php?'. $query .'">Stages</a>';
+          echo '<a class="nav-link" href="'.BASE_URL.'/views/shows/index.php?'. $query .'">Shows</a>';
+          echo '<a class="nav-link" href="'.BASE_URL.'/views/performers/index.php?'. $query .'">Performers</a>';
         
         ?>
       </div>
