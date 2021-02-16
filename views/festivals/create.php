@@ -93,7 +93,7 @@ try {
             <div class="row">
                 <div class="col-md-12">
                     <form method="POST"
-                          action="store.php"
+                          action="store.php?<?= $query?>"
                           role="form"
                           class="form-horizontal"
                           enctype="multipart/form-data"
@@ -160,7 +160,7 @@ try {
                         </div>
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-3">
-                                <a href="index.php" class="btn btn-default">Cancel</a>
+                            <a href="index.php?<?= $query ?>"class="btn btn-default">Cancel</a>
                                 <button type="submit" class="btn btn-primary pull-right">Submit</button>
                             </div>
                         </div>

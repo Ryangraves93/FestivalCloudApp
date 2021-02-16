@@ -27,7 +27,7 @@ catch (Exception $ex) {
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <h2>Stages <a href="create.php" class="btn btn-primary pull-right">Add</a></h2>
+                <h2>Stages <a href="create.php?<?= $query ?>"class="btn btn-primary pull-right">Add</a></h2>
                     <?php if (count($stages) == 0) { ?>
                         <p>There are no stages</p>
                     <?php } else { ?>
@@ -42,11 +42,11 @@ catch (Exception $ex) {
                                 <?php foreach ($stages as $stage) { 
                                   $festival = Festival::find($stage->festival_id);
                                   ?>
-                                    <tr data-id="<?= $stage->id ?>">
-                                        <td><a href="show.php?id=<?= $stage->id ?>" class="btn-link"><?= $stage->title ?></a></td>
+                                    <tr data-id="<?= $stage->id . '&' . $query ?>">
+                                        <td><a href="show.php?id=<?= $stage->id . '&' . $query ?>" class="btn-link"><?= $stage->title ?></a></td>
                                         <td><?= $stage->description ?></td>
                                         <td><?= $stage->location ?></td>
-                                        <td><a href="../festivals/show.php?id=<?= $festival->id ?>" class="btn-link"><?= $festival->title ?></a></td>
+                                        <td><a href="../festivals/show.php?id=<?= $festival->id . '&' . $query ?>" class="btn-link"><?= $festival->title ?></a></td>
                                     </tr>
                                 <?php } ?>
                             </tbody>

@@ -83,9 +83,9 @@ catch (Exception $ex) {
                         </tbody>
                     </table>
                     <p>
-                        <a href="index.php" class="btn btn-default">Cancel</a>
-                        <a href="edit.php?id=<?= $stage->id ?>" class="btn btn-warning">Edit</a>
-                        <a href="delete.php?id=<?= $stage->id ?>" class="btn btn-danger">Delete</a>
+                    <a href="index.php?<?= $query ?>"class="btn btn-default">Cancel</a>
+                        <a href="edit.php?id=<?= $stage->id . '&' . $query ?>" class="btn btn-warning">Edit</a>
+                        <a href="delete.php?id=<?= $stage->id . '&' . $query ?>" class="btn btn-danger">Delete</a>
                     </p>
                 </div>
             </div>

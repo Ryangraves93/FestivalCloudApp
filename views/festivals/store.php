@@ -2,6 +2,8 @@
 require_once '../../classes/Festival.php';
 require_once '../../classes/Gump.php';
 require_once '../../utils/functions.php';
+use Aws\S3\S3Client;
+use Aws\Exception\AwsException;
 
 try {
     $validator = new GUMP();
@@ -28,6 +30,9 @@ try {
     
     $fileName = time();
 
+    $bucket = 'elasticbeanstalk-us-east-1-163071675941';
+    $keyName = 'Test_Example/';
+
     if($validated_data === false) {
         $errors = $validator->get_errors_array();
     }
@@ -36,9 +41,11 @@ try {
         if (isset($_FILES['image_path'])) {
           try {
               $imageFile = imageFileUpload('image_path', false, 1000000, array('jpg', 'jpeg', 'png', 'gif'), $fileName);
+          
           }
           catch (Exception $e) {
               $errors['image_path'] = $e->getMessage();
+              var_dump($e);
           }
         }
         else {
@@ -60,7 +67,8 @@ try {
 
     $festival->save();
 
-    header("Location: index.php");
+    
+    header("Location: index.php?access_token=" . htmlspecialchars($_GET["access_token"]));
 }
 catch (Exception $ex) {
     require 'create.php';

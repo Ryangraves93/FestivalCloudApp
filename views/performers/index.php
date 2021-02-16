@@ -26,7 +26,7 @@ catch (Exception $ex) {
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <h2>Performers <a href="create.php" class="btn btn-primary pull-right">Add</a></h2>
+                <h2>Performers <a href="create.php?<?= $query ?>"class="btn btn-primary pull-right">Add</a></h2>
                     <?php if (count($performers) == 0) { ?>
                         <p>There are no performers</p>
                     <?php } else { ?>
@@ -39,8 +39,8 @@ catch (Exception $ex) {
                             </thead>
                             <tbody>
                                 <?php foreach ($performers as $performer) { ?>
-                                    <tr data-id="<?= $performer->id ?>">
-                                        <td><a href="show.php?id=<?= $performer->id ?>" class="btn-link"><?= $performer->title ?></a></td>
+                                    <tr data-id="<?= $performer->id . '&' . $query ?>">
+                                        <td><a href="show.php?id=<?= $performer->id . '&' . $query ?>" class="btn-link"><?= $performer->title ?></a></td>
                                         <td><?= $performer->description ?></td>
                                         <td><?= $performer->contact_email ?></td>
                                         <td><?= $performer->contact_phone ?></td>

@@ -23,6 +23,11 @@ try {
       'performer_id' => 'trim|sanitize_numbers'
     );
 
+    $parts = preg_split('@(?=&)@', $_POST['id']);
+    $id = intval($parts[0]);
+    $token = substr($parts[1], 1);
+    $_POST['id'] = $id;
+
     $validator->validation_rules($validation_rules);
     $validator->filter_rules($filter_rules);
     
@@ -61,7 +66,7 @@ try {
     $show->stage_id = $validated_data['stage_id'];
     $show->save();
 
-    header("Location: index.php");
+    header("Location: index.php?access_token=" . htmlspecialchars($_GET['access_token']));
 }
 catch (Exception $ex) {
   // dd();

@@ -30,7 +30,7 @@ catch (Exception $ex) {
             <div class="row">
                 <div class="col-md-12">
                     <form method="POST"
-                          action="store.php"
+                          action="store.php?<?= $query ?>"
                           role="form"
                           class="form-horizontal"
                           enctype="multipart/form-data"
@@ -45,7 +45,7 @@ catch (Exception $ex) {
                             <div class="col-md-6">
                                 <select class="form-control" id="performer_id" name="performer_id">
                                     <?php foreach ($performers as $performer) { ?>
-                                        <option value="<?= $performer->id ?>"><?= $performer->title ?></option>
+                                        <option value="<?= $performer->id . '&' . $query ?>"><?= $performer->title ?></option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -58,7 +58,7 @@ catch (Exception $ex) {
                             <div class="col-md-6">
                                 <select class="form-control" id="stage_id" name="stage_id">
                                     <?php foreach ($stages as $stage) { ?>
-                                        <option value="<?= $stage->id ?>"><?= $stage->title ?></option>
+                                        <option value="<?= $stage->id . '&' . $query ?>"><?= $stage->title ?></option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -86,7 +86,7 @@ catch (Exception $ex) {
                         </div>
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-3">
-                                <a href="index.php" class="btn btn-default">Cancel</a>
+                            <a href="index.php?<?= $query ?>"class="btn btn-default">Cancel</a>
                                 <button type="submit" class="btn btn-primary pull-right">Submit</button>
                             </div>
                         </div>

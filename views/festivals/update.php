@@ -23,14 +23,28 @@ try {
       'city' => 'trim|sanitize_string'
     );
 
+    // Extract token from post ID
+    $parts = preg_split('@(?=&)@', $_POST['id']);
+
+    // Split up values
+    $id = intval($parts[0]);
+
+    // Removes "&" from beginning of string
+    $token = substr($parts[1], 1);
+
+    // Set post id to be token before validation
+    $_POST['id'] = $id;
+
     $validator->validation_rules($validation_rules);
     $validator->filter_rules($filter_rules);
     
     $validated_data = $validator->run($_POST);
-    $id = $_POST['id'];
+
+
     $fileName = time();
     $festival = Festival::find($id);
     
+
     if($validated_data === false) {
         $errors = $validator->get_errors_array();
     }
@@ -51,8 +65,9 @@ try {
 
     }
     
-// dd($errors);
+    
     if (!empty($errors)) {
+        // dd($errors);
         throw new Exception("There were errors. Please fix them.");
     }
 
@@ -69,11 +84,10 @@ try {
     }
     $festival->save();
 
-    header("Location: index.php");
+    header("Location: index.php?" . htmlspecialchars($token));
+
 }
 catch (Exception $ex) {
-  // dd();
     require 'edit.php';
-    
 }
 ?>

@@ -1,4 +1,13 @@
 <?php
+
+use Aws\S3\S3Client;
+use Aws\Exception\AwsException;
+use Aws\S3\Exception\S3Exception;
+require_once(__DIR__ . '/../classes/Auth.php');
+
+
+
+
 function is_logged_in() {
     start_session();
     return (isset($_SESSION['user']));
@@ -35,6 +44,27 @@ function dd($value) {
     exit();
 }
 
+// function createBucket()
+// {
+//     $s3client = new S3Client([
+//         'profile' => 'default',
+//         'version' => Auth::$version,
+//         'region' => Auth::$region,
+
+//         'credentials' => [
+//             'key' => Auth::$key,
+//             'secret' => Auth::$secret,
+//             'token' => Auth::$access_token
+//         ],
+//     ]);
+
+//     //Get the image
+//     //Call the api to pass the image to the bucket
+//     //$s3Client->getObject(,path)
+
+//     echo createBucket($s3Client, 'my-bucket');
+// }
+
 function imageFileUpload($name, $required, $maxSize, $allowedTypes, $fileName) {
     if ($_SERVER['REQUEST_METHOD'] !== "POST") {
         throw new Exception('Invalid request');
@@ -61,15 +91,19 @@ function imageFileUpload($name, $required, $maxSize, $allowedTypes, $fileName) {
         throw new Exception("File is not an image.");
     }
 
+    
+    $auth = new Auth();
+
     $width = $imageInfo[0];
     $height = $imageInfo[1];
     $sizeString = $imageInfo[3];
     $mime = $imageInfo['mime'];
 
-    $target_dir = "../../uploads/";
+    $target_dir = "../";
     $target_file = $target_dir . basename($_FILES[$name]["name"]);
     $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
     $target_file = $target_dir . "/" . $fileName . "." . $imageFileType;
+    
 
     if (!file_exists($target_dir)) {
         mkdir($target_dir, 755, true);
@@ -86,10 +120,37 @@ function imageFileUpload($name, $required, $maxSize, $allowedTypes, $fileName) {
         throw new Exception("Sorry, only " . implode(',', $allowedTypes) . " files are allowed.");
     }
 
-    if (!move_uploaded_file($_FILES[$name]["tmp_name"], $target_file)) {
-        throw new Exception("Sorry, there was an error moving your uploaded file.");
-    }
+         $keyName = 'Test_Example/'. basename($_FILES[$name]["name"]);
+         $bucket = 'festivalcloudbucket';
+         
+         $file = $target_dir.$fileName;
 
-    return "uploads/" . $fileName . "." . $imageFileType;
+         try {
+            //Create a S3Client
+            $s3Client = new S3Client([
+                
+                'region' => Auth::$region,
+                'version' => 'latest',
+
+             'credentials' => [
+                    'key' => 'ASIASL56UJYSWQF7J3QK',
+                    'secret' => Auth::$secret,
+                    'token' => Auth::$session_token
+             ],
+            ]);
+            //get command, get object
+            $result = $s3Client->putObject([
+                'Bucket' => $bucket,
+                'Key' => $keyName,
+                'SourceFile' => $_FILES[$name]["tmp_name"],
+            ]);
+        } catch (S3Exception $e) {
+            throw new Exception ($e->getMessage() . "\n");
+        }
+        catch (\Exception $e) {
+            throw new Exception($e->getMessage() . "\n");
+        }
+
+    return $keyName;
 }
 ?>

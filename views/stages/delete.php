@@ -35,7 +35,7 @@ try {
     
     $stage->delete();
 
-    header("Location: index.php");
+    header("Location: index.php?" . htmlspecialchars($token));
 }
 catch (Exception $ex) {
     die($ex->getMessage());

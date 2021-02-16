@@ -24,6 +24,11 @@ try {
       'festival_id' => 'trim|sanitize_numbers'
     );
 
+       $parts = preg_split('@(?=&)@', $_POST['festival_id']);
+       $id = intval($parts[0]);
+       $token = substr($parts[1], 1);
+       $_POST['festival_id'] = $id;
+
     $validator->validation_rules($validation_rules);
     $validator->filter_rules($filter_rules);
     
@@ -77,7 +82,7 @@ try {
     }
     $stage->save();
 
-    header("Location: index.php");
+    header("Location: index.php?" . htmlspecialchars($token));
 }
 catch (Exception $ex) {
   // dd();

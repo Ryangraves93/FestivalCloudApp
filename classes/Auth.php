@@ -4,11 +4,12 @@ use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient;
 require_once(__DIR__ . '/../vendor/autoload.php');
 
 class Auth {
-    private static $key = "ASIASL56UJYS2BNOUNOQ";
-    private static $secret = "e6GivHb70+UWEMJke1eynqxxbaDqmbwjiqA5bgrg";
-    private static $region = "us-east-1";
-    private static $version = "2016-04-18";
-    public static $url = "https://festival-app.auth.us-east-1.amazoncognito.com/login?client_id=788pbdt0lnh6o7taenjn40g8h3&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+profile&redirect_uri=http://localhost:8888/festivalCloud/index.php";
+    public static $key = "ASIASL56UJYSWQF7J3QK";
+    public static $session_token = "FwoGZXIvYXdzEE0aDHA/HKZVGyQ1cI18wCLJAcD2Luy+O21PJIGdtpkGNE1wOS65Tf6JcYP7dQ4Q6M1gK4XvJxoSwdoT+qcCBuUzGxLw7FVOJnywYBL+OMF4iyjfRgRDSqJg4KbZnv8D7nqTpCuVoZJqfnxcn/71pEV8Mff22X7xZ4AdKwVVisFsYoWi4c1JTB2fZRZH35wU/MfkbvR8eh+s7LRdR0oZHkcc4Xcui7JPCYemWe9WxQMHXcxjGv/PkDrC1eJiPTQHsBvjoxUCnFOkybT84VpLWM/vQOWJG61m7nofvijA0a6BBjItNBCcYGaxV6sJATvkKv1DiXMnea6Hje4SqaWkWj7EmzGsTonWbTE0fIKkhQBd";
+    public static $secret = "LG8BuDT+o/hTqQuR1eCmxJkjKEdPS817i4BRffzf";
+    public static $region = "us-east-1";
+    public static $version = "2016-04-18";
+    public static $url = "https://festivalcloud.auth.us-east-1.amazoncognito.com/login?client_id=3jf46kc1urfgujpmb5ar23n0l3&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=http://localhost/festivalCloud/index.php";
 
     public $access_token;
     public $email;
@@ -16,6 +17,12 @@ class Auth {
     public $phone;
     public $isLoggedIn=false;    
 
+    public function redirect($msg) {
+        $url = BASE_URL . "?error=" . $msg;
+        
+        header("Location: " . $url, true);
+        exit();
+    }
 
     public function __construct() {
         if(isset($_GET["access_token"])) {
@@ -83,10 +90,12 @@ class Auth {
             if(isset($_GET["logout"]) && $_GET["logout"] == 'true'){
                 //This will invalidate the access token
                 $result = $client->globalSignOut([
-                    'AccessToken' => $access_token,
+                    'AccessToken' => $this->access_token,
                 ]);
                 
-                header("Location: " + Auth::$url);
+                $this->isLoggedIn = false;
+                var_dump(BASE_URL);
+                header("Location: " . BASE_URL, true);
                 
             }
             

@@ -26,7 +26,13 @@ catch (Exception $ex) {
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <h2>Festivals <a href="create.php" class="btn btn-primary pull-right">Add</a></h2>
+                
+                '<a class="nav-link" href="'.BASE_URL.'/views/festivals/index.php?' .$query .'">Festivals</a>';
+                
+                    
+
+                    <?php if($auth->loggedIn()) echo '<a href="create.php?'. $query .'" class="btn btn-primary pull-right">Add</a>'; ?>
+                    
                     <?php if (count($festivals) == 0) { ?>
                         <p>There are no festivals</p>
                     <?php } else { ?>
@@ -39,8 +45,8 @@ catch (Exception $ex) {
                             </thead>
                             <tbody>
                                 <?php foreach ($festivals as $festival) { ?>
-                                    <tr data-id="<?= $festival->id ?>">
-                                        <td><a href="show.php?id=<?= $festival->id ?>" class="btn-link"><?= $festival->title ?></a></td>
+                                    <tr data-id="<?= $festival->id . '&' . $query ?>">
+                                        <td><a href="show.php?id=<?= $festival->id . '&' . $query ?>" class="btn-link"><?= $festival->title ?></a></td>
                                         <td><?= $festival->city ?></td>
                                         <td><?= $festival->start_date ?></td>
                                         <td><?= $festival->end_date ?></td>

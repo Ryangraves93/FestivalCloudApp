@@ -70,7 +70,7 @@ catch (Exception $ex) {
                           class="form-horizontal"
                           enctype="multipart/form-data"
                           >
-                        <input type="hidden" name="id" value="<?= $performer->id ?>" />
+                          <input type="hidden" name="id" value="<?= $performer->id . '&' . $query ?>" />
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-3">
                                 <h2>Edit performer form</h2>
@@ -125,7 +125,7 @@ catch (Exception $ex) {
                         </div>
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-3">
-                                <a href="index.php" class="btn btn-default">Cancel</a>
+                            <a href="index.php?<?= $query ?>"class="btn btn-default">Cancel</a>
                                 <button type="submit" class="btn btn-primary pull-right">Submit</button>
                             </div>
                         </div>

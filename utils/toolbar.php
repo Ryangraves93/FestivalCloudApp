@@ -21,20 +21,24 @@
       <div class="navbar-nav">
         <?php
         require_once 'functions.php';
-        require_once __DIR__ . '/../classes/Auth.php'; //:)
+        require_once __DIR__ . '/../classes/Auth.php'; 
         $auth = new Auth();
         $query = "";
         
         if($auth->loggedIn()) {
           $query = 'access_token='.$auth->getAccessToken();
-          echo 'logged in';
-          echo '<a class="nav-link" href="'.BASE_URL.'">Sign Out</a>';
-        } else echo '<a class="nav-link" href="'. $auth->getSignInURL() . '">Sign In</a>';
-        
+        } else if(strpos($_SERVER['REQUEST_URI'], 'views/')) {
+          //$auth->redirect("You have to be logged in to view this page");        
+        }
+
+        if ($auth->loggedIn()){
           echo '<a class="nav-link" href="'.BASE_URL.'/views/festivals/index.php?' .$query .'">Festivals</a>';
           echo '<a class="nav-link" href="'.BASE_URL.'/views/stages/index.php?'. $query .'">Stages</a>';
           echo '<a class="nav-link" href="'.BASE_URL.'/views/shows/index.php?'. $query .'">Shows</a>';
           echo '<a class="nav-link" href="'.BASE_URL.'/views/performers/index.php?'. $query .'">Performers</a>';
+          echo '<a class="nav-link" href="'.BASE_URL.'?' . $query . '&logout=true">Sign Out</a>';
+        } else echo '<a class="nav-link" href="'. $auth->getSignInURL() . '">Sign In</a>';
+          
         
         ?>
       </div>
