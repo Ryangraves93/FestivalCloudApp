@@ -81,12 +81,7 @@ class Auth {
             }	
 
             $this->isLoggedIn = true;
-            // echo '<h2>Logged-In User Attributes</h2>';
-            // echo '<p>User E-Mail : ' . $user_email . '</p>';
-            // echo '<p>User Phone Number : ' . $user_phone_number . '</p>';
-            // echo "<a href='?logout=true&access_token=$access_token'>SIGN OUT</a>";
             
-        
             if(isset($_GET["logout"]) && $_GET["logout"] == 'true'){
                 //This will invalidate the access token
                 $result = $client->globalSignOut([

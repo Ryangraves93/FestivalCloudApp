@@ -25,8 +25,9 @@ function old($index, $default = null) {
         echo $_POST[$index];
     }
     else if ($default !== null) {
-        echo $default;
+        echo $default; 
     }
+
 }
 
 function error($index) {
@@ -91,9 +92,6 @@ function imageFileUpload($name, $required, $maxSize, $allowedTypes, $fileName) {
         throw new Exception("File is not an image.");
     }
 
-    
-    $auth = new Auth();
-
     $width = $imageInfo[0];
     $height = $imageInfo[1];
     $sizeString = $imageInfo[3];
@@ -125,6 +123,7 @@ function imageFileUpload($name, $required, $maxSize, $allowedTypes, $fileName) {
          
          $file = $target_dir.$fileName;
 
+
          try {
             //Create a S3Client
             $s3Client = new S3Client([
@@ -144,6 +143,8 @@ function imageFileUpload($name, $required, $maxSize, $allowedTypes, $fileName) {
                 'Key' => $keyName,
                 'SourceFile' => $_FILES[$name]["tmp_name"],
             ]);
+
+            return $result['objectURL'];
         } catch (S3Exception $e) {
             throw new Exception ($e->getMessage() . "\n");
         }

@@ -35,7 +35,7 @@ try {
     
     $stage->delete();
 
-    header("Location: index.php?" . htmlspecialchars($token));
+    header("Location: index.php?access_token=" . htmlspecialchars($_GET["access_token"]));
 }
 catch (Exception $ex) {
     die($ex->getMessage());

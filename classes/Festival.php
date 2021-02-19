@@ -22,7 +22,7 @@ class Festival {
             'end_date' => $this->end_date,
             'image_path' => $this->image_path
         );
-
+        
         if ($this->id === NULL) {
             $sql = "INSERT INTO festivals(
                         title, description, city, start_date, end_date, image_path

@@ -28,7 +28,7 @@ try {
     $show = show::find($id);
     $show->delete();
 
-    header("Location: index.php");
+    header("Location: index.php?access_token=" . htmlspecialchars($_GET["access_token"]));
 }
 catch (Exception $ex) {
     die($ex->getMessage());
